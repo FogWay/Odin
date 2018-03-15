@@ -1,17 +1,18 @@
-
 export default {
 
-  namespace: 'example',
+  namespace: 'login',
 
-  state: {},
+  state: {
+    test: '32'
+  },
 
   subscriptions: {
-    setup({ dispatch, history }) {  // eslint-disable-line
+    setup({ dispatch, history }) {
     },
   },
 
   effects: {
-    *fetch({ payload }, { call, put }) {  // eslint-disable-line
+    * fetch({ payload }, { call, put }) {
       yield put({ type: 'save' });
     },
   },
