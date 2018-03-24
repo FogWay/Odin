@@ -1,15 +1,17 @@
 import React from 'react';
 import { connect } from 'dva';
+
 import styles from './Login.less';
-import LoginForm from '../components/login/LoginForm';
+
+import LoginForm from '../../components/login/LoginForm';
 
 class Login extends React.Component {
   render() {
     return (
-      <div className={styles.root} >
-        <div className={styles.blur}></div>
-        <LoginForm {...this.props}/>
-      </div >
+      <div className={ styles.root }>
+        <div className={ styles.blur }></div>
+        <LoginForm { ...this.props }/>
+      </div>
     );
   }
 }

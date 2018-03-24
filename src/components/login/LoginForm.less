@@ -2,7 +2,7 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -54%);
   width: 400px;
   padding: 40px;
   border-radius: 10px;
@@ -21,9 +21,14 @@
       color: #1890ff;
     }
   }
+  .transBack :global {
+    input, .ant-checkbox-inner {
+      background: rgba(0, 0, 0, 0.08);
+    }
+  }
   .loginBtn {
     display: block;
-    margin-top: 10px;
     width: 100%;
+    background: rgba(24, 144, 255, 0.2);
   }
 }
