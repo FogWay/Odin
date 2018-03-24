@@ -22,7 +22,12 @@ function checkStatus(response) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default function request(url, options) {
-  return fetch(url, options)
+  return fetch(url,
+    Object.assign({}, options, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+      },
+    }))
     .then(checkStatus)
     .then(parseJSON)
     .then(data => ({ data }))
