@@ -1,0 +1,48 @@
+.container {
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
+  height: 48px;
+  background: rgb(33, 33, 33);
+  color: #fff;
+  font-size: 16px;
+
+  li {
+    display: inline-block;
+    height: 100%;
+    line-height: 48px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .floatLeft {
+    float: left;
+    height: 100%;
+    .systemName {
+      width: 180px;
+      border-right: 1px solid #bbaeae;
+      text-align: center;
+      i {
+        margin-right: 14px;
+        font-size: 24px;
+      }
+    }
+    .collapseIcon {
+      margin-left: 20px;
+    }
+  }
+  .floatRight {
+    float: right;
+    height: 100%;
+    .greet {
+      margin-right: 20px;
+    }
+    .photo {
+      margin-right: 50px;
+    }
+    .fullScreen {
+      margin-right: 30px;
+      font-size: 18px;
+    }
+  }
+}

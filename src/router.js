@@ -9,7 +9,9 @@ function RouterConfig({ history }) {
     <Router history={ history }>
       <Switch>
         <Route path="/login" exact component={ Login }/>
-        <Route path="/home" exact component={ Home }/>
+        <Route path="/home" exact component={ Home }>
+          {/*<Route path="/user_manage" component={UserManage}/>*/}
+        </Route>
       </Switch>
     </Router>
   );

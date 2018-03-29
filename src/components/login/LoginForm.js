@@ -3,7 +3,7 @@ import { Button, Checkbox, Form, Icon, Input, Spin } from 'antd';
 
 import styles from './LoginForm.less';
 
-import config from '../../utils/config';
+import { logo, name } from '../../utils/constant';
 
 const FormItem = Form.Item;
 
@@ -40,51 +40,51 @@ class LoginForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <div className={ styles.container }>
-        <div className={ styles.logo }>
-          <img src={ config.logo } alt="logo"/>
-          <span>{ config.name }</span>
-        </div>
-        <Form onSubmit={ this.handleSubmit }>
-          <FormItem>
-            { getFieldDecorator('userName', {
+      <div className={styles.container} >
+        <div className={styles.logo} >
+          <img src={logo} alt="logo" />
+          <span >{name}</span >
+        </div >
+        <Form onSubmit={this.handleSubmit} >
+          <FormItem >
+            {getFieldDecorator('userName', {
               initialValue: this.props.login.defaultUsername,
               rules: [{
                 required: true,
                 message: '用户名不能为空',
               }],
             })(
-              <Input prefix={ <Icon type="user"/> }
+              <Input prefix={<Icon type="user" />}
                      placeholder="Username"
-                     className={ styles.transBack }/>
-            ) }
-          </FormItem>
-          <FormItem>
-            { getFieldDecorator('password', {
+                     className={styles.transBack} />
+            )}
+          </FormItem >
+          <FormItem >
+            {getFieldDecorator('password', {
               rules: [{ required: true, message: '密码不能为空' }],
             })(
-              <Input prefix={ <Icon type="lock"/> }
+              <Input prefix={<Icon type="lock" />}
                      type="password"
                      placeholder="Password"
-                     className={ styles.transBack }/>
-            ) }
-          </FormItem>
-          <FormItem>
-            <Checkbox className={ styles.transBack }
-                      checked={ this.props.login.remember }
-                      onChange={ this.remChange }>
+                     className={styles.transBack} />
+            )}
+          </FormItem >
+          <FormItem >
+            <Checkbox className={styles.transBack}
+                      checked={this.props.login.remember}
+                      onChange={this.remChange} >
               记住用户
-            </Checkbox>
-          </FormItem>
-          <Spin spinning={ this.props.login.loginLoading }>
+            </Checkbox >
+          </FormItem >
+          <Spin spinning={this.props.login.loginLoading} >
             <Button type="primary"
                     htmlType="submit"
-                    className={ styles.loginBtn }>
+                    className={styles.loginBtn} >
               登录
-            </Button>
-          </Spin>
-        </Form>
-      </div>
+            </Button >
+          </Spin >
+        </Form >
+      </div >
     );
   }
 }

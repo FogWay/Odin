@@ -20,6 +20,7 @@ export default {
   effects: {
     * e_login({ payload }, { select, call, put }) {
       try {
+        yield put({ type: 'login/r_setSpinStatus', payload: { loginLoading: true } });
         const { data } = yield call(services.login, payload);
 
         if (data.code === 200) {
