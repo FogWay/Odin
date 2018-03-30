@@ -7,17 +7,9 @@ import styles from './SidebarNav.less';
 const SubMenu = Menu.SubMenu;
 
 class SidebarNav extends React.Component {
-  state = {
-    collapsed: false,
-  }
-  toggleCollapsed = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  }
 
   render() {
-    console.log(this.props)
+    const {collapsed} = this.props.header;
     return (
       <div className={ styles.container }>
         <Menu
@@ -25,7 +17,7 @@ class SidebarNav extends React.Component {
           defaultOpenKeys={ ['sub1'] }
           mode="inline"
           theme="dark"
-          inlineCollapsed={ this.state.collapsed }
+          inlineCollapsed={ collapsed }
         >
           <Menu.Item key="1">
             <Icon type="pie-chart"/>
@@ -63,6 +55,7 @@ class SidebarNav extends React.Component {
 function mapStateToProps(state) {
   return {
     sidebar: state.sidebar,
+    header: state.header
   };
 }
 

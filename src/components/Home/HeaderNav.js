@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Avatar, Icon, Popover, Col } from 'antd';
+import { Avatar, Button, Divider, Icon, Popover } from 'antd';
 
 import styles from './Headernav.less';
 
-import { logo, systemInfo } from '../../utils/constant';
+import { systemInfo } from '../../utils/constant';
 
 class HeaderNav extends React.Component {
 
@@ -15,82 +15,65 @@ class HeaderNav extends React.Component {
   };
 
   toggleScreen = () => {
-    const { dispatch } = this.props;
-    const { isFullScreen } = this.props.header;
+    // 检测浏览器能力，根据当前全屏状态决定是进行全屏或退出全屏
+    const doc = document;
     const docElm = document.documentElement;
-    const fullScreen = () => {
-      if (docElm.requestFullscreen) {
-        docElm.requestFullScreen();
+    const fullScreen = [document.fullscreen, document.mozFullScreen, document.webkitIsFullScreen, document.msFullscreenElement];
+    let isFullScreen;
+    fullScreen.forEach((item) => {
+      if (item !== undefined) {
+        isFullScreen = item;
       }
-      else if (docElm.webkitRequestFullScreen) {
-        docElm.webkitRequestFullScreen();
-      }
-      else if (docElm.mozRequestFullScreen) {
-        docElm.mozRequestFullScreen();
-      }
-      else if (docElm.msRequestFullscreen) {
-        docElm.msRequestFullscreen();
-      }
-      else {
-        return false;
-      }
-    };
-    const cancelFullScreen = () => {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      }
-      else if (document.webkitCancelFullScreen) {
-        document.webkitCancelFullScreen();
-      }
-      else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-      }
-      else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
-      }
-    };
+    });
     if (isFullScreen) {
-      dispatch({ type: 'header/r_setScreenStatus', payload: { isFullScreen: false } });
-      cancelFullScreen();
+      (doc.exitFullscreen || doc.webkitCancelFullScreen || doc.mozCancelFullScreen || doc.msExitFullscreen).call(doc)
     } else {
-      dispatch({ type: 'header/r_setScreenStatus', payload: { isFullScreen: true } });
-      fullScreen();
+      (docElm.requestFullscreen || docElm.webkitRequestFullscreen || docElm.mozRequestFullscreen || docElm.msRequestFullscreen).call(docElm);
     }
   };
 
   render() {
+    const { collapsed, userName, authName, account } = this.props.header;
     const content = (
-      <p>dd</p>
-      //  TODO:用户操作（注销；个人信息）
+      <div className={styles.popBox} >
+        <Avatar style={{ backgroundColor: '#87d068' }} icon="user" size="large" />
+        <p className={styles.auth} >权限：{authName}</p >
+        <p >账号：{account}</p >
+        <Divider />
+        <div style={{ display: 'flex', justifyContent: 'space-between' }} >
+          <Button size="small" type="primary" >个人中心</Button >
+          <Button size="small" type="danger" >注销</Button >
+        </div >
+      </div >
     );
-    const { collapsed } = this.props.header;
-
     return (
-      <div className={ styles.container }>
+      <div className={styles.container} >
 
-        <div className={ styles.left }>
-          <div className={ styles.systemInfo }>
-            <Icon type="yuque"/><span>{ systemInfo }</span>
-          </div>
-          <div className={ styles.collapseIcon } onClick={ this.toggleCollapse }>
-            <Icon type={ collapsed ? 'menu-unfold' : 'menu-fold' }
-                  style={ { color: '#fff', fontSize: '20px' } }/>
-          </div>
-        </div>
+        <div className={styles.left} >
+          <div className={styles.systemInfo} >
+            <Icon type="yuque" /><span >{systemInfo}</span >
+          </div >
+          <div className={styles.collapseIcon} onClick={this.toggleCollapse} >
+            <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'}
+                  style={{ color: '#fff', fontSize: '20px' }} />
+          </div >
+        </div >
 
-        <div className={ styles.right }>
-          <Popover content={ content }>
-            <div className={ styles.userInfo }>
-              <span>你好，不辞远</span>
-              <Avatar size="large" src={ logo } className={ styles.photo }></Avatar>
-            </div>
-          </Popover>
-          <div className={ styles.fullScreen }>
-            <Icon type="arrows-alt" onClick={ this.toggleScreen }/>
-          </div>
-        </div>
+        <div className={styles.right} >
+          <div className={styles.smallPhoto} >
+            <Avatar style={{ backgroundColor: '#87d068' }} icon="user" shape="square" />
+          </div >
+          <Popover content={content} trigger="click" size="large" >
+            <div className={styles.userInfo} >
+              <span >你好，{userName}</span ><Icon type="caret-down" />
+            </div >
+          </Popover >
+          <div className={styles.fullScreen} >
+            <Icon type="arrows-alt" onClick={this.toggleScreen} />
+          </div >
+        </div >
 
-      </div>
+      </div >
     )
   }
 }

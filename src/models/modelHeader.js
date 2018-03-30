@@ -7,7 +7,9 @@ export default {
 
   state: {
     collapsed: false,
-    isFullScreen: false
+    userName: 'Jayden Deng',
+    authName: '管理员',
+    account: '676081195'
   },
 
   subscriptions: {
@@ -19,9 +21,6 @@ export default {
 
   reducers: {
     r_setCollapseStatus(state, { payload }) {
-      return { state, ...payload };
-    },
-    r_setScreenStatus(state, { payload }) {
       return { state, ...payload };
     }
   }
