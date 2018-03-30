@@ -3,6 +3,10 @@ html, body, :global(#root) {
   height: 100%;
 }
 
+html{
+  min-width: 1280px;
+}
+
 * :global {
   margin: 0;
   padding: 0;

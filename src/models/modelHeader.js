@@ -6,7 +6,8 @@ export default {
   namespace: 'header',
 
   state: {
-
+    collapsed: false,
+    isFullScreen: false
   },
 
   subscriptions: {
@@ -14,10 +15,15 @@ export default {
     }
   },
 
-  effects: {
+  effects: {},
 
-  },
-
-  reducers: {}
+  reducers: {
+    r_setCollapseStatus(state, { payload }) {
+      return { state, ...payload };
+    },
+    r_setScreenStatus(state, { payload }) {
+      return { state, ...payload };
+    }
+  }
 
 };
