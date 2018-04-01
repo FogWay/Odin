@@ -35,45 +35,45 @@ class HeaderNav extends React.Component {
   render() {
     const { collapsed, userName, authName, account } = this.props.header;
     const content = (
-      <div className={styles.popBox} >
-        <Avatar style={{ backgroundColor: '#87d068' }} icon="user" size="large" />
-        <p className={styles.auth} >权限：{authName}</p >
-        <p >账号：{account}</p >
-        <Divider />
-        <div style={{ display: 'flex', justifyContent: 'space-between' }} >
-          <Button size="small" type="primary" >个人中心</Button >
-          <Button size="small" type="danger" >注销</Button >
-        </div >
-      </div >
+      <div className={ styles.popBox }>
+        <Avatar style={ { backgroundColor: '#87d068' } } icon="user" size="large"/>
+        <p className={ styles.auth }>权限：{ authName }</p>
+        <p>账号：{ account }</p>
+        <Divider/>
+        <div style={ { display: 'flex', justifyContent: 'space-between' } }>
+          <Button size="small" type="primary">个人中心</Button>
+          <Button size="small" type="danger">注销</Button>
+        </div>
+      </div>
     );
     return (
-      <div className={styles.container} >
+      <div className={ styles.container }>
 
-        <div className={styles.left} >
-          <div className={styles.systemInfo} >
-            <Icon type="yuque" /><span >{systemInfo}</span >
-          </div >
-          <div className={styles.collapseIcon} onClick={this.toggleCollapse} >
-            <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'}
-                  style={{ color: '#fff', fontSize: '20px' }} />
-          </div >
-        </div >
+        <div className={ styles.left }>
+          <div className={ styles.systemInfo }>
+            <Icon type="yuque"/><span>{ systemInfo }</span>
+          </div>
+          <div className={ styles.collapseIcon } onClick={ this.toggleCollapse }>
+            <Icon type={ collapsed ? 'menu-unfold' : 'menu-fold' }
+                  style={ { color: '#fff', fontSize: '20px' } }/>
+          </div>
+        </div>
 
-        <div className={styles.right} >
-          <div className={styles.smallPhoto} >
-            <Avatar style={{ backgroundColor: '#87d068' }} icon="user" shape="square" />
-          </div >
-          <Popover content={content} trigger="click" size="large" >
-            <div className={styles.userInfo} >
-              <span >你好，{userName}</span ><Icon type="caret-down" />
-            </div >
-          </Popover >
-          <div className={styles.fullScreen} >
-            <Icon type="arrows-alt" onClick={this.toggleScreen} />
-          </div >
-        </div >
+        <div className={ styles.right }>
+          <div className={ styles.smallPhoto }>
+            <Avatar style={ { backgroundColor: '#87d068' } } icon="user" shape="square"/>
+          </div>
+          <Popover content={ content } trigger="click" size="large">
+            <div className={ styles.userInfo }>
+              <span>你好，{ userName }</span><Icon type="caret-down"/>
+            </div>
+          </Popover>
+          <div className={ styles.fullScreen } onClick={ this.toggleScreen }>
+            <Icon type="arrows-alt"/>
+          </div>
+        </div>
 
-      </div >
+      </div>
     )
   }
 }

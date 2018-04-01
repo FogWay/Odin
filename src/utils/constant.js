@@ -9,6 +9,7 @@ module.exports = {
   name: 'XJS 管理系统',
   systemInfo: 'Xjs Admin V1.0.0',
   URL: {
-    userLogin: `${prefix}user/login.ajax`
+    userLogin: `${prefix}user/login.ajax`,
+    userInfo: `${prefix}user/getUserInfo.ajax`
   }
 };
