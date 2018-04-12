@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 
-import styles from './ContentArea.less';
+import styles from './MainBody.less';
 
 class ContentArea extends React.Component {
   render() {
@@ -27,6 +27,25 @@ class ContentArea extends React.Component {
         <p>Content</p>
         <p>Content</p>
         <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+        <p>Content</p>
+
       </div >
     )
   }

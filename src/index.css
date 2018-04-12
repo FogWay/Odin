@@ -1,9 +1,8 @@
-
 html, body, :global(#root) {
-  height: 100%;
+  height: auto !important;
 }
 
 html {
   min-width: 1280px;
-  background: #F4F4F4;
+  background: #f4f4f4;
 }

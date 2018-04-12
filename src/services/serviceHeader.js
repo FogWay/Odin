@@ -1,7 +1,7 @@
 import request from '../utils/request';
 import qs from 'querystring';
 
-import { URL } from '../utils/constant';
+import { URL } from '../utils/Constant';
 
 const { userInfo } = URL;
 

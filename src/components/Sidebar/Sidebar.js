@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Button, Icon, Menu } from 'antd';
+import { Icon, Menu } from 'antd';
 
-import styles from './SidebarNav.less';
+import styles from './Sidebar.less';
 
 const SubMenu = Menu.SubMenu;
 

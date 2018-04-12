@@ -1,6 +1,4 @@
-import { routerReduxrouterRedux } from 'dva/router';
-import { message } from 'antd';
-import * as services from '../services/serviceHeader';
+import * as services from '../../services/serviceHeader';
 
 export default {
 
@@ -25,7 +23,7 @@ export default {
         const { data } = yield call(services.getUserInfo);
         if (data.code === 200) {
           yield put({
-            type: 'r_setUserInfo',
+            type: 'r_updateState',
             payload: {
               userName: data.data.userName,
               authName: data.data.authName,
@@ -40,10 +38,7 @@ export default {
   },
 
   reducers: {
-    r_setCollapseStatus(state, { payload }) {
-      return { ...state, ...payload };
-    },
-    r_setUserInfo(state, { payload }) {
+    r_updateState(state, { payload }) {
       return { ...state, ...payload };
     }
   }

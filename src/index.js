@@ -9,8 +9,8 @@ const app = dva();
 app.use(createLoading());
 
 // 3. Model
-app.model(require('./models/modelLogin').default);
-app.model(require('./models/modelHeader').default);
+app.model(require('./models/Login/modelLogin').default);
+app.model(require('./models/Header/modelHeader').default);
 
 // 4. Router
 app.router(require('./router').default);

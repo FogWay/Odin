@@ -1,21 +1,21 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Avatar, Button, Divider, Icon, Popover } from 'antd';
+import { Avatar, Button, Divider, Icon, Dropdown  } from 'antd';
 
-import styles from './Headernav.less';
+import styles from './Header.less';
 
-import { systemInfo } from '../../utils/constant';
+import { systemInfo } from '../../utils/Constant';
 
-class HeaderNav extends React.Component {
+class Header extends React.Component {
 
   toggleCollapse = () => {
     const { dispatch } = this.props;
     let { collapsed } = this.props.header;
-    dispatch({ type: 'header/r_setCollapseStatus', payload: { collapsed: !collapsed } })
+    dispatch({ type: 'header/r_updateState', payload: { collapsed: !collapsed } })
   };
 
   toggleScreen = () => {
-    // 检测浏览器能力，根据当前全屏状态决定是进行全屏或退出全屏
+    // Check the full screen capability of the browser.
     const doc = document;
     const docElm = document.documentElement;
     const fullScreen = [document.fullscreen, document.mozFullScreen, document.webkitIsFullScreen, document.msFullscreenElement];
@@ -63,11 +63,11 @@ class HeaderNav extends React.Component {
           <div className={ styles.smallPhoto }>
             <Avatar style={ { backgroundColor: '#87d068' } } icon="user" shape="square"/>
           </div>
-          <Popover content={ content } trigger="click" size="large">
+          <Dropdown  overlay={ content } trigger="click" size="large">
             <div className={ styles.userInfo }>
               <span>你好，{ userName }</span><Icon type="caret-down"/>
             </div>
-          </Popover>
+          </Dropdown>
           <div className={ styles.fullScreen } onClick={ this.toggleScreen }>
             <Icon type="arrows-alt"/>
           </div>
@@ -85,4 +85,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(HeaderNav);
+export default connect(mapStateToProps)(Header);
