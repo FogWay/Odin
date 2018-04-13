@@ -1,5 +1,4 @@
 import React from 'react';
-import { Affix } from 'antd';
 
 import styles from './IndexPage.less';
 
@@ -10,13 +9,13 @@ import MainBody from '../../components/MainBody/MainBody';
 class IndexPage extends React.Component {
   render() {
     return (
-      <div >
-        <Header />
-        <div className={styles.container} >
-          <Affix>
-            <Sidebar />
-          </Affix>
-          <MainBody />
+      <div className={styles.root} >
+        <Sidebar />
+        <div className={styles.layout} >
+          <Header />
+          <div className={styles.mainBody} >
+            <MainBody />
+          </div >
         </div >
       </div >
     );

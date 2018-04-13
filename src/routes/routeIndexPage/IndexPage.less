@@ -1,9 +1,11 @@
-.container {
+.root {
   display: flex;
-  align-items: flex-start;
-  width: 100%;
-  & > div:last-child {
-    flex: 1;
-    padding-left: 20px;
+  height: 100%;
+  .layout {
+    flex: auto;
+    .mainBody {
+      height: calc(~"100% - 48px");
+      overflow: hidden;
+    }
   }
 }

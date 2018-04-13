@@ -3,10 +3,10 @@ import { connect } from 'dva';
 
 import styles from './MainBody.less';
 
-class ContentArea extends React.Component {
+class MainBody extends React.Component {
   render() {
     return (
-      <div className={styles.container} >
+      <div className={styles.root} >
         <p>Content</p>
         <p>Content</p>
         <p>Content</p>
@@ -27,35 +27,9 @@ class ContentArea extends React.Component {
         <p>Content</p>
         <p>Content</p>
         <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
-
       </div >
     )
   }
 }
 
-
-function mapStateToProps(state) {
-  return {
-    main: state.main,
-  };
-}
-
-export default connect(mapStateToProps)(ContentArea);
+export default MainBody;

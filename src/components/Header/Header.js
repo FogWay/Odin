@@ -4,8 +4,6 @@ import { Avatar, Button, Divider, Icon, Dropdown  } from 'antd';
 
 import styles from './Header.less';
 
-import { systemInfo } from '../../utils/Constant';
-
 class Header extends React.Component {
 
   toggleCollapse = () => {
@@ -50,9 +48,6 @@ class Header extends React.Component {
       <div className={ styles.container }>
 
         <div className={ styles.left }>
-          <div className={ styles.systemInfo }>
-            <Icon type="yuque"/><span>{ systemInfo }</span>
-          </div>
           <div className={ styles.collapseIcon } onClick={ this.toggleCollapse }>
             <Icon type={ collapsed ? 'menu-unfold' : 'menu-fold' }
                   style={ { color: '#fff', fontSize: '20px' } }/>

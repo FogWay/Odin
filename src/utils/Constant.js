@@ -8,7 +8,7 @@ module.exports = {
   logoImage: '/src/assets/logo.jpg',
   systemName: 'XJS 管理系统',
   // Index page header
-  systemInfo: 'Xjs Admin V1.0.0',
+  systemInfo: 'XJS Admin V1.0.0',
   //API
   URL: {
     userLogin: `${prefix}user/login.ajax`,
