@@ -3,15 +3,15 @@ import { Route, Router, Switch } from 'dva/router';
 
 import Login from './routes/routeLogin/Login';
 import index from './routes/routeIndexPage/IndexPage';
+import CategoryManage from './routes/routeCategory/Category';
 
 function RouterConfig({ history }) {
   return (
     <Router history={ history }>
       <Switch>
-        <Route path="/login" exact component={ Login }/>
-        <Route path="/index" exact component={ index }>
-          {/*<Route path="/user_manage" component={UserManage}/>*/}
-        </Route>
+        <Route path="/login" component={ Login }/>
+        <Route path="/index" component={ index }/>
+        <Route path="/index/category" component={ CategoryManage }/>
       </Switch>
     </Router>
   );

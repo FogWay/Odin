@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Avatar, Button, Divider, Icon, Dropdown  } from 'antd';
+import { Avatar, Button, Divider, Icon, Dropdown } from 'antd';
 
 import styles from './Header.less';
 
@@ -45,7 +45,7 @@ class Header extends React.Component {
       </div>
     );
     return (
-      <div className={ styles.container }>
+      <div className={ styles.root }>
 
         <div className={ styles.left }>
           <div className={ styles.collapseIcon } onClick={ this.toggleCollapse }>
@@ -58,7 +58,7 @@ class Header extends React.Component {
           <div className={ styles.smallPhoto }>
             <Avatar style={ { backgroundColor: '#87d068' } } icon="user" shape="square"/>
           </div>
-          <Dropdown  overlay={ content } trigger="click" size="large">
+          <Dropdown overlay={ content } trigger={ ['click'] } size="large">
             <div className={ styles.userInfo }>
               <span>你好，{ userName }</span><Icon type="caret-down"/>
             </div>

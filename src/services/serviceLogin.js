@@ -3,10 +3,10 @@ import qs from 'querystring';
 
 import { URL } from '../utils/Constant';
 
-const { userLogin } = URL;
+const { user_login } = URL;
 
 export async function login(params) {
-  return request(userLogin, {
+  return request(user_login, {
     method: 'POST',
     body: qs.stringify(params)
   });

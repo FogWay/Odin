@@ -1,4 +1,5 @@
 import fetch from 'dva/fetch';
+import { notification } from 'antd';
 
 function parseJSON(response) {
   return response.json();
@@ -31,5 +32,12 @@ export default function request(url, options) {
     .then(checkStatus)
     .then(parseJSON)
     .then(data => ({ data }))
-    .catch(err => ({ err }));
+    .catch(() => {
+      notification.error({
+        message: 'Notification Message',
+        description: '网络错误',
+        placement: 'topLeft',
+        style: { width: 300 }
+      });
+    });
 }

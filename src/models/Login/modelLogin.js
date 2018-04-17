@@ -1,5 +1,5 @@
 import { routerRedux } from 'dva/router';
-import { message } from 'antd';
+import { notification } from 'antd';
 import * as services from '../../services/serviceLogin';
 
 export default {
@@ -24,19 +24,32 @@ export default {
         // Login request
         const { data } = yield call(services.login, payload);
         // Login successfully
-        if (data.code === 200) {
+        if (data.dataCode === 200) {
           const isRemember = yield select(state => state.login.isRemember);
           const currentUsername = localStorage.getItem('defaultUsername');
           if (isRemember) {
-            localStorage.setItem('defaultUsername', payload.username);
-          } else if (currentUsername === payload.username) {
+            localStorage.setItem('defaultUsername', payload.loginName);
+          } else if (currentUsername === payload.loginName) {
             localStorage.removeItem('defaultUsername');
           }
           sessionStorage.setItem('loginStatus', 'true');
-          yield put(routerRedux.push('/home'));
+          notification.success({
+            message: 'Notification Message',
+            description: '登录成功',
+            placement: 'topLeft',
+            duration: 1,
+            style: { width: 300 }
+          });
+          yield put(routerRedux.push('/index/category'));
         } else {
           // Login failed
-          message.error(data.message, 0.8)
+          notification.error({
+            message: 'Notification Message',
+            description: data.meta.message,
+            placement: 'topLeft',
+            duration: 1,
+            style: { width: 300 }
+          });
         }
         yield put({ type: 'r_updateState', payload: { loginLoading: false } });
       } catch (err) {

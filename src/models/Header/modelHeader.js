@@ -1,3 +1,4 @@
+import { notification } from 'antd';
 import * as services from '../../services/serviceHeader';
 
 export default {
@@ -13,7 +14,7 @@ export default {
 
   subscriptions: {
     setup({ dispatch, history }) {
-      dispatch({ type: 'e_getUserInfo' });
+      // dispatch({ type: 'e_getUserInfo' });
     }
   },
 
@@ -25,9 +26,9 @@ export default {
           yield put({
             type: 'r_updateState',
             payload: {
+              account: data.data.account,
               userName: data.data.userName,
-              authName: data.data.authName,
-              account: data.data.account
+              authName: data.data.authName
             }
           });
         }

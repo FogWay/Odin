@@ -3,10 +3,11 @@ import qs from 'querystring';
 
 import { URL } from '../utils/Constant';
 
-const { userInfo } = URL;
+const { user_info } = URL;
 
 export async function getUserInfo() {
-  return request(userInfo, {
-    method: 'POST'
+  return request(user_info, {
+    method: 'POST',
+    body: qs.stringify({})
   });
 }
