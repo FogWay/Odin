@@ -12,6 +12,7 @@ app.use(createLoading());
 app.model(require('./models/Login/modelLogin').default);
 app.model(require('./models/Header/modelHeader').default);
 app.model(require('./models/MainBody/Category/modelCategory').default);
+app.model(require('./models/MainBody/Repository/modelRepository').default);
 
 // 4. Router
 app.router(require('./router').default);
