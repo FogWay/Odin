@@ -2,8 +2,26 @@
   .formItem {
     display: flex;
     justify-content: space-between;
-    width: 60%;
     height: 60px;
-    margin: 0 0 0 auto;
+    margin: 16px 0 0 auto;
   }
+}
+
+.formFilterDropdown {
+  padding: 8px;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+  & > input, & > div {
+    width: 65%;
+  }
+  & > button {
+    width: 30%;
+    margin-left: 5%;
+  }
+}
+
+.deliveryButton {
+  display: flex;
+  justify-content: space-around;
 }

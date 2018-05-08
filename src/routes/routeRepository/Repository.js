@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Breadcrumb, Button, Form, Input, Table, Popconfirm, Tag, Spin, AutoComplete, Col } from 'antd';
+import { Breadcrumb, Button, Form, Input, Table, Icon, Tag, Spin, AutoComplete, DatePicker, Modal } from 'antd';
+import langConfig from '../../utils/zh_CN';
 
 import styles from './Repository.less';
 
 const FormItem = Form.Item;
 const Option = AutoComplete.Option;
+const RangePicker = DatePicker.RangePicker;
 
 class Repository extends React.Component {
   addRepository = (e) => {
@@ -15,31 +17,150 @@ class Repository extends React.Component {
       if (err) {
         return false;
       }
+      this.props.dispatch({
+        type: 'repository/r_updateState',
+        payload: { addButtonLoading: true }
+      });
+      this.props.dispatch({
+        type: 'repository/e_addRepository',
+        payload: {
+          kindId: getFieldValue('kind'),
+          totalCount: getFieldValue('totalCount'),
+          totalArea: getFieldValue('totalArea')
+        }
+      });
+    });
+  };
+  queryRepository = () => {
+    this.props.dispatch({
+      type: 'repository/r_updateState',
+      payload: {
+        currentPage: 1,
+        numbderFiltered: !!this.props.repository.numberFilterValue,
+        numberFilterVisible: false,
+        kindNameFiltered: !!this.props.repository.kindNameFilterValue,
+        kindNameFilterVisible: false
+      }
+    });
+    this.props.dispatch({
+      type: 'repository/e_queryRepository'
+    });
+  };
+  numberChange = (e) => {
+    this.props.dispatch({
+      type: 'repository/r_updateState',
+      payload: { numberFilterValue: e.target.value }
+    });
+  };
+  kindNameChange = (value) => {
+    this.props.dispatch({
+      type: 'repository/r_updateState',
+      payload: { kindNameFilterValue: value }
+    });
+  };
+  timeChange = (dates, dateStrings) => {
+    this.props.dispatch({
+      type: 'repository/r_updateState',
+      payload: {
+        createTimeFilterValue: dateStrings[0] ? dateStrings[0] + ' 00:00:00' : '',
+        endTimeFilterValue: dateStrings[1] ? dateStrings[1] + ' 23:59:59' : ''
+      }
+    });
+    this.props.dispatch({
+      type: 'repository/e_queryRepository'
+    });
+  };
+  showDeliveryModal = () => {
+    this.props.dispatch({
+      type: 'repository/r_updateState',
+      payload: { deliveryModalVisible: true }
+    });
+  };
+  cancelDelivery = () => {
+    this.props.dispatch({
+      type: 'repository/r_updateState',
+      payload: { deliveryModalVisible: false }
+    });
+  };
+  confirmDelivery = () => {
+    this.props.dispatch({
+      type: 'repository/r_updateState',
+      payload: { deliveryModalVisible: false }
     });
   };
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    // pagination
     const pagination = {
       total: this.props.repository.total,
+      showTotal: (total) => `共 ${total} 条`,
+      current: this.props.repository.currentPage,
       onChange: (page) => {
         this.props.dispatch({
-          type: 'category/r_updateState',
+          type: 'repository/r_updateState',
           payload: { currentPage: page }
         });
-        this.props.dispatch({ type: 'category/e_queryRepository' });
+        this.props.dispatch({ type: 'repository/e_queryRepository' });
       }
     };
-    const children = this.props.repository.allCategory.map((item) => {
+    // Autocomplete items
+    const addChildren = this.props.repository.allCategory.map((item) => {
       return <Option key={ item.id }>{ item.name }</Option>;
     });
+    const filterChildren = this.props.repository.allCategory.map((item) => {
+      return <Option key={ item.name }>{ item.name }</Option>;
+    });
+    // Table columns
     const columns = [{
       title: '扎编号',
       dataIndex: 'number',
+      filterIcon: <Icon type="filter"
+                        style={ { color: !!this.props.repository.numbderFiltered ? '#108ee9' : '#aaa' } }/>,
+      filterDropdown: (
+        <div className={ styles.formFilterDropdown }>
+          <Input
+            placeholder="编号"
+            onChange={ this.numberChange }
+            onPressEnter={ this.queryRepository }
+          />
+          <Button type="primary" onClick={ this.queryRepository }>搜索</Button>
+        </div>
+      ),
+      filterDropdownVisible: this.props.repository.numberFilterVisible,
+      onFilterDropdownVisibleChange: (visible) => {
+        this.props.dispatch({
+          type: 'repository/r_updateState',
+          payload: { numberFilterVisible: visible }
+        });
+      },
       render: (text) => (<Tag color="#108ee9">{ text }</Tag>)
     }, {
       title: '所属种类',
       dataIndex: 'kindName',
+      filterIcon: <Icon type="filter"
+                        style={ { color: !!this.props.repository.kindNameFiltered ? '#108ee9' : '#aaa' } }/>,
+      filterDropdown: (
+        <div className={ styles.formFilterDropdown }>
+          <AutoComplete
+            placeholder="板材种类"
+            onChange={ this.kindNameChange }
+            filterOption={ (inputValue, option) => option.props.children.toLowerCase().indexOf(inputValue.toLowerCase()) > -1 }
+          >
+            { filterChildren }
+          </AutoComplete>
+          <Button type="primary" onClick={ this.queryRepository }>搜索</Button>
+        </div>
+      ),
+      filterDropdownVisible: this.props.repository.kindNameFilterVisible,
+      onFilterDropdownVisibleChange: (visible) => {
+        if (visible === true) {
+          this.props.dispatch({
+            type: 'repository/r_updateState',
+            payload: { kindNameFilterVisible: true }
+          });
+        }
+      },
       render: (text) => (<Tag>{ text }</Tag>)
     }, {
       title: '当前片数',
@@ -52,6 +173,15 @@ class Repository extends React.Component {
     }, {
       title: '创建时间',
       dataIndex: 'createAt',
+      filterIcon: <Icon type="filter"
+                        style={ { color: !!this.props.repository.createTimeFilterValue || !!this.props.repository.endTimeFilterValue ? '#108ee9' : '#aaa' } }/>,
+      filterDropdown: (
+        <RangePicker
+          format="YYYY-MM-DD"
+          onChange={ this.timeChange }
+          locale={ langConfig }
+        />
+      ),
       render: (text) => (<Tag>{ text }</Tag>)
     }, {
       title: '更新时间',
@@ -64,14 +194,16 @@ class Repository extends React.Component {
     }, {
       title: '操作',
       key: 'action',
-      render: (text, record) =>
-        <Popconfirm title="确认删除该种类？" okText="确认" cancelText="取消"
-                    onConfirm={ () => {
-                      this.deleteCategory(record.id)
-                    } }>
-          <Button icon="delete" type="danger"></Button>
-        </Popconfirm>
+      render: (text, record) => (
+        <div className={ styles.deliveryButton }>
+          <Button disabled={ !record.leftArea && !record.leftCount } type="primary"
+                  onClick={ this.showDeliveryModal }>原材料出库
+          </Button>
+          <Button disabled={ !record.backCargoList.length } type="primary">返库板材出库</Button>
+        </div>
+      )
     }];
+
     return (
       <div className={ styles.root }>
 
@@ -80,48 +212,56 @@ class Repository extends React.Component {
           <Breadcrumb.Item>库存管理</Breadcrumb.Item>
         </Breadcrumb>
 
+        <Modal
+          title={this.props.repository.deliveryModalTitle}
+          visible={ this.props.repository.deliveryModalVisible }
+          onOk={ this.confirmDelivery }
+          okText="确认"
+          onCancel={ this.cancelDelivery }
+          cancelText="取消"
+        >
+        </Modal>
+
         <Form onSubmit={ this.addRepository } layout="inline" className={ styles.formItem }>
-          <FormItem>
+          <FormItem label="板材种类">
             { getFieldDecorator('kind', {
               rules: [{
                 required: true,
-                message: '请填写新增扎片数',
+                message: '请填写新增扎所属种类',
               }],
             })(
               <AutoComplete
-                addonBefore="ss"
-                style={ { width: 200 } }
                 placeholder="板材种类"
                 filterOption={ (inputValue, option) => option.props.children.toLowerCase().indexOf(inputValue.toLowerCase()) > -1 }
               >
-                { children }
+                { addChildren }
               </AutoComplete>
             ) }
           </FormItem>
-          <FormItem>
+          <FormItem label="新扎片数">
             { getFieldDecorator('totalCount', {
               rules: [{
                 required: true,
                 message: '请填写新增扎片数',
               }],
             })(
-              <Input placeholder="片数"/>
+              <Input placeholder="片数" addonAfter="片"/>
             ) }
           </FormItem>
-          <FormItem>
+          <FormItem label="新扎总面积">
             { getFieldDecorator('totalArea', {
               rules: [{
                 required: true,
                 message: '请填写新增扎总面积',
               }],
             })(
-              <Input placeholder="总面积"/>
+              <Input placeholder="总面积" addonAfter="平方米"/>
             ) }
           </FormItem>
 
           <FormItem>
             <Button type="primary" htmlType="submit" loading={ this.props.repository.addButtonLoading }>
-              添加种类
+              添加新扎
             </Button>
           </FormItem>
         </Form>

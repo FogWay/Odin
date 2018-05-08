@@ -97,7 +97,7 @@ class Category extends React.Component {
 
         <div className={ styles.addCategory }>
           <Form onSubmit={ this.addCategory } layout="inline">
-            <FormItem>
+            <FormItem label="种类名称">
               { getFieldDecorator('newTypeName', {
                 rules: [{
                   required: true,
